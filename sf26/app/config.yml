@@ -1,0 +1,20 @@
+parameters:
+    locale: fr
+
+services:
+    app.command.test:
+        class: App\TestCommand
+        arguments: [ '@translator.default' ]
+        tags:
+            - { name: console.command }
+
+    app.event_listener.translation:
+        class: App\TranslationSubscriber
+        arguments: [ '@translator.default', '%kernel.root_dir%/../truc' ]
+        tags:
+            - { name: kernel.event_subscriber }
+
+framework:
+    default_locale:  "%locale%"
+    translator:      { fallbacks: ["%locale%"] }
+    secret:          secret
